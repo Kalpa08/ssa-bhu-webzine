@@ -5,44 +5,33 @@ import '../styles/global.css';
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nahor | Students' Society of Assam</title>
+    <style>
+      body { background-color: #F9F9F7 !important; color: #1A1A1A !important; font-family: sans-serif; }
+      .btn { display: inline-block; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 4px; transition: 0.3s; }
+      .btn-ink { background-color: #1A1A1A; color: #F9F9F7; }
+      .btn-outline { border: 1px solid #1A1A1A; color: #1A1A1A; }
+      .btn:hover { opacity: 0.8; }
+    </style>
   </head>
-  <body class="bg-magazine-paper text-magazine-ink font-sans min-h-screen">
-    
-    <!-- Navigation Bar -->
-    <header class="border-b border-gray-300 py-6 px-6">
-      <div class="max-w-4xl mx-auto flex justify-between items-center">
-        <div class="font-serif text-2xl font-bold tracking-tight">Nahor.</div>
-        <nav class="hidden md:flex space-x-8 text-sm font-bold text-gray-600">
-          <a href="#" class="hover:text-magazine-ink transition-colors">Editorials</a>
-          <a href="#" class="hover:text-magazine-ink transition-colors">Campus Life</a>
-          <a href="#" class="hover:text-magazine-ink transition-colors">Gallery</a>
-        </nav>
-      </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="max-w-3xl mx-auto py-24 px-6 text-center">
+  <body>
+    <main style="max-width: 600px; margin: 80px auto; text-align: center; padding: 0 20px;">
       
-      <p class="text-sm font-bold tracking-widest text-gray-500 uppercase mb-4">Students' Society of Assam, BHU</p>
+      <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 12px; color: #666;">Students' Society of Assam, BHU</p>
       
-      <h1 class="text-5xl md:text-6xl font-serif font-bold mb-6 leading-tight">
-        A record of culture, <br />
-        <span class="text-gray-500 italic">and scholarly pursuit.</span>
+      <h1 style="font-family: serif; font-size: 48px; margin: 20px 0;">
+        A record of culture,<br/>
+        <i style="color: #666;">and scholarly pursuit.</i>
       </h1>
       
-      <p class="text-lg md:text-xl text-gray-600 mb-12 leading-relaxed font-serif">
-        The premier digital publication exploring literature, academic excellence, and the vibrant heritage of Assam.
+      <p style="font-size: 18px; color: #444; margin-bottom: 40px; font-family: serif;">
+        The premier digital publication exploring literature, academic excellence, and the heritage of Assam.
       </p>
       
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a href="#" class="px-8 py-3 bg-magazine-ink text-magazine-paper text-sm font-bold rounded hover:opacity-80 transition-opacity w-full sm:w-auto">
-          Read the Latest
-        </a>
-        <a href="/admin" class="px-8 py-3 border border-magazine-ink text-magazine-ink text-sm font-bold rounded hover:bg-gray-200 transition-colors w-full sm:w-auto">
-          Editorial Login
-        </a>
+      <div style="display: flex; gap: 15px; justify-content: center;">
+        <a href="#" class="btn btn-ink">Read the Latest</a>
+        <a href="/admin" class="btn btn-outline">Editorial Login</a>
       </div>
 
     </main>
