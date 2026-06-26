@@ -1,0 +1,24 @@
+import '../styles/global.css';
+const { frontmatter } = Astro.props;
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{frontmatter.title} | Nahor Webzine</title>
+  </head>
+  <body class="bg-magazine-paper text-magazine-ink font-sans min-h-screen">
+    <main class="max-w-3xl mx-auto py-16 px-6">
+      <header class="mb-12 text-center">
+        <h1 class="text-4xl font-serif font-bold mb-4">{frontmatter.title}</h1>
+        <p class="text-gray-600 italic">
+          By {frontmatter.author} | {new Date(frontmatter.publishDate).toLocaleDateString()}
+        </p>
+      </header>
+      <article class="prose prose-lg prose-stone mx-auto font-serif">
+        <slot />
+      </article>
+    </main>
+  </body>
+</html>
+EOF

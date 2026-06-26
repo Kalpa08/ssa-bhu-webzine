@@ -1,0 +1,35 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "campus"
+    label: "Campus (News/Events)"
+    folder: "src/content/campus"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Author", name: "author", widget: "string"}
+      - {label: "Publish Date", name: "publishDate", widget: "datetime"}
+      - {label: "Cover Image", name: "coverImage", widget: "image", required: false}
+      - {label: "Tags", name: "tags", widget: "list", default: ["news"]}
+      - {label: "Featured", name: "featured", widget: "boolean", default: false}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "echoes"
+    label: "Echoes (Poetry/Stories)"
+    folder: "src/content/echoes"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Author", name: "author", widget: "string"}
+      - {label: "Publish Date", name: "publishDate", widget: "datetime"}
+      - {label: "Cover Image", name: "coverImage", widget: "image", required: false}
+      - {label: "Tags", name: "tags", widget: "list", default: ["literature"]}
+      - {label: "Featured", name: "featured", widget: "boolean", default: false}
+      - {label: "Body", name: "body", widget: "markdown"}
