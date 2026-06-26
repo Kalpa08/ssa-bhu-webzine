@@ -1,5 +1,4 @@
 ---
-import MainLayout from '../layouts/ArticleLayout.astro';
 ---
 
 <html lang="en">
@@ -8,18 +7,53 @@ import MainLayout from '../layouts/ArticleLayout.astro';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nahor | Students' Society of Assam</title>
   </head>
-  <body class="bg-stone-50 text-stone-900 dark:bg-stone-900 dark:text-stone-50 antialiased selection:bg-rose-500 selection:text-white">
+  <body class="bg-stone-50 text-stone-900 dark:bg-stone-900 dark:text-stone-50 antialiased selection:bg-stone-300 selection:text-stone-900">
     
-    <!-- Navigation Bar will go here -->
-    
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <!-- Hero Section will go here -->
-      <h1 class="text-5xl font-serif font-bold text-center mt-20">Welcome to Nahor</h1>
-      <p class="text-center mt-4 text-stone-500 dark:text-stone-400 text-lg">The digital publication is currently under construction.</p>
+    <!-- Navigation Bar -->
+    <header class="border-b border-stone-200 dark:border-stone-800 sticky top-0 bg-stone-50/90 dark:bg-stone-900/90 backdrop-blur-md z-50">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div class="font-serif text-2xl font-bold tracking-tight">Nahor.</div>
+        <nav class="hidden md:flex space-x-8 text-sm font-medium text-stone-600 dark:text-stone-300">
+          <a href="#" class="hover:text-stone-900 dark:hover:text-white transition-colors">Editorials</a>
+          <a href="#" class="hover:text-stone-900 dark:hover:text-white transition-colors">Campus Life</a>
+          <a href="#" class="hover:text-stone-900 dark:hover:text-white transition-colors">Gallery</a>
+          <a href="#" class="hover:text-stone-900 dark:hover:text-white transition-colors">About Us</a>
+        </nav>
+        <!-- Mobile Menu Icon -->
+        <button class="md:hidden p-2 text-stone-600 dark:text-stone-300">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+      
+      <!-- Hero Section -->
+      <div class="text-center max-w-3xl mx-auto">
+        <p class="text-sm font-semibold tracking-widest text-stone-500 uppercase mb-4">Students' Society of Assam, BHU</p>
+        <h1 class="text-5xl md:text-7xl font-serif font-bold tracking-tight mb-8 leading-tight">
+          A record of culture, <br />
+          <span class="text-stone-400 italic">and scholarly pursuit.</span>
+        </h1>
+        <p class="text-lg md:text-xl text-stone-600 dark:text-stone-300 mb-10 leading-relaxed">
+          The premier digital publication exploring literature, academic excellence, and the vibrant heritage of Assam.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="#" class="px-8 py-3 bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 text-sm font-medium rounded-full hover:bg-stone-800 dark:hover:bg-white transition-all w-full sm:w-auto">Read the Latest</a>
+          <a href="/admin" class="px-8 py-3 bg-transparent border border-stone-300 dark:border-stone-700 text-sm font-medium rounded-full hover:border-stone-900 dark:hover:border-stone-100 transition-all w-full sm:w-auto">Editorial Login</a>
+        </div>
+      </div>
+
+      <!-- Structural Divider -->
+      <div class="mt-24 border-t border-stone-200 dark:border-stone-800 pt-12 flex justify-between items-center text-sm text-stone-500 font-serif italic">
+        <span>Volume I</span>
+        <span>Est. 2026</span>
+      </div>
+
     </main>
-
-    <!-- Footer will go here -->
-
   </body>
 </html>
 
