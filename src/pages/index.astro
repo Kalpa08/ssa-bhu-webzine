@@ -1,5 +1,5 @@
 ---
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
 const allCampusPosts = await getCollection('campus');
@@ -10,68 +10,45 @@ const latestPost = sortedPosts[0];
 const postUrl = latestPost ? `/campus/${latestPost.id}` : "#";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nahor | Students' Society of Assam</title>
-    <style>
-      body { background-color: #F9F9F7 !important; color: #1A1A1A !important; font-family: serif; margin: 0; padding: 0;}
-      
-      /* Global Navigation Styles */
-      .nav { padding: 20px; text-align: center; border-bottom: 1px solid #ddd; font-family: sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px;}
-      .nav a { color: #1A1A1A; text-decoration: none; margin: 0 15px; font-weight: bold; transition: 0.2s; }
-      .nav a:hover { opacity: 0.5; }
-      
-      /* Button Styles */
-      .btn { display: inline-block; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 4px; transition: 0.3s; font-family: sans-serif; font-size: 14px;}
-      .btn-ink { background-color: #1A1A1A; color: #F9F9F7; }
-      .btn-outline { border: 1px solid #1A1A1A; color: #1A1A1A; }
-      .btn:hover { opacity: 0.8; }
-      
-      .post-card { margin-top: 60px; padding: 24px; border-top: 1px solid #ddd; text-align: left; }
-    </style>
-  </head>
-  <body>
+<BaseLayout title="Nahor | Home">
+  <style>
+    .btn { display: inline-block; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 4px; transition: 0.3s; font-family: sans-serif; font-size: 14px;}
+    .btn-ink { background-color: #1A1A1A; color: #F9F9F7; }
+    .btn-outline { border: 1px solid #1A1A1A; color: #1A1A1A; }
+    .btn:hover { opacity: 0.8; }
+    .post-card { margin-top: 60px; padding: 24px; border-top: 1px solid #ddd; text-align: left; }
+  </style>
+
+  <main style="max-width: 600px; margin: 60px auto; text-align: center; padding: 0 20px;">
     
-    <!-- Top Navigation Bar -->
-    <nav class="nav">
-      <a href="/">Home</a>
-      <a href="/campus">Campus News</a>
-      <a href="/admin">Editorial Login</a>
-    </nav>
+    <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 12px; color: #666; font-family: sans-serif;">Students' Society of Assam, BHU</p>
+    
+    <h1 style="font-size: 48px; margin: 20px 0; line-height: 1.1;">
+      A record of culture,<br/>
+      <i style="color: #666;">and scholarly pursuit.</i>
+    </h1>
+    
+    <p style="font-size: 18px; color: #444; margin-bottom: 40px;">
+      The premier digital publication exploring literature, academic excellence, and the heritage of Assam.
+    </p>
+    
+    <div style="display: flex; gap: 15px; justify-content: center;">
+      <a href={postUrl} class="btn btn-ink">Read the Latest</a>
+      <a href="/campus" class="btn btn-outline">View Archives</a>
+    </div>
 
-    <main style="max-width: 600px; margin: 60px auto; text-align: center; padding: 0 20px;">
-      
-      <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 12px; color: #666; font-family: sans-serif;">Students' Society of Assam, BHU</p>
-      
-      <h1 style="font-size: 48px; margin: 20px 0; line-height: 1.1;">
-        A record of culture,<br/>
-        <i style="color: #666;">and scholarly pursuit.</i>
-      </h1>
-      
-      <p style="font-size: 18px; color: #444; margin-bottom: 40px;">
-        The premier digital publication exploring literature, academic excellence, and the heritage of Assam.
-      </p>
-      
-      <div style="display: flex; gap: 15px; justify-content: center;">
-        <a href={postUrl} class="btn btn-ink">Read the Latest</a>
-        <a href="/campus" class="btn btn-outline">View Archives</a>
+    {latestPost && (
+      <div class="post-card">
+        <p style="font-size: 12px; color: #666; text-transform: uppercase; font-weight: bold; margin-bottom: 8px; font-family: sans-serif;">Latest Dispatch</p>
+        <a href={postUrl} style="text-decoration: none; color: #1A1A1A;">
+          <h2 style="font-size: 28px; margin: 0 0 8px 0;">{latestPost.data.title}</h2>
+        </a>
+        <p style="font-size: 14px; color: #666; margin: 0 0 12px 0; font-family: sans-serif;">By {latestPost.data.author}</p>
+        
+        <p style="font-size: 16px; color: #444; line-height: 1.6;">
+          {latestPost.body?.slice(0, 150)}{latestPost.body && latestPost.body.length > 150 ? '...' : ''}
+        </p>
       </div>
-
-      {latestPost && (
-        <div class="post-card">
-          <p style="font-size: 12px; color: #666; text-transform: uppercase; font-weight: bold; margin-bottom: 8px; font-family: sans-serif;">Latest Dispatch</p>
-          <a href={postUrl} style="text-decoration: none; color: #1A1A1A;">
-            <h2 style="font-size: 28px; margin: 0 0 8px 0;">{latestPost.data.title}</h2>
-          </a>
-          <p style="font-size: 14px; color: #666; margin: 0 0 12px 0; font-family: sans-serif;">By {latestPost.data.author}</p>
-          
-          <p style="font-size: 16px; color: #444; line-height: 1.6;">
-            {latestPost.body?.slice(0, 150)}{latestPost.body && latestPost.body.length > 150 ? '...' : ''}
-          </p>
-        </div>
-      )}
-    </main>
-  </body>
-</html>
+    )}
+  </main>
+</BaseLayout>

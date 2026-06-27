@@ -1,0 +1,32 @@
+---
+import '../styles/global.css';
+const { title = "Nahor | Students' Society of Assam" } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <style>
+      body { background-color: #F9F9F7 !important; color: #1A1A1A !important; font-family: serif; margin: 0; padding: 0;}
+      
+      /* Global Navigation Styles */
+      .nav { padding: 20px; text-align: center; border-bottom: 1px solid #ddd; font-family: sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px;}
+      .nav a { color: #1A1A1A; text-decoration: none; margin: 0 15px; font-weight: bold; transition: 0.2s; }
+      .nav a:hover { opacity: 0.5; }
+    </style>
+  </head>
+  <body>
+    <!-- Top Navigation Bar (Now global!) -->
+    <nav class="nav">
+      <a href="/">Home</a>
+      <a href="/campus">Campus News</a>
+      <a href="/admin">Editorial Login</a>
+    </nav>
+
+    <!-- The magic slot where individual page content gets injected -->
+    <slot />
+    
+  </body>
+</html>
