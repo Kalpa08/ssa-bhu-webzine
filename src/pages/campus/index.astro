@@ -1,62 +1,47 @@
 ---
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-// 1. Fetch all articles in the "campus" database
 const allCampusPosts = await getCollection('campus');
-
-// 2. Sort them so the newest ones are always at the top
 const sortedPosts = allCampusPosts.sort(
   (a, b) => new Date(b.data.publishDate).valueOf() - new Date(a.data.publishDate).valueOf()
 );
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Campus News | Nahor</title>
-    <style>
-      body { background-color: #F9F9F7 !important; color: #1A1A1A !important; font-family: serif; }
-      .container { max-width: 650px; margin: 60px auto; padding: 0 20px; }
-      .back-link { font-family: sans-serif; font-size: 14px; text-decoration: none; color: #666; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 40px; display: inline-block; }
-      .back-link:hover { color: #1A1A1A; }
-      .section-title { font-size: 36px; margin: 0 0 40px 0; border-bottom: 2px solid #1A1A1A; padding-bottom: 10px; }
-      
-      .post-item { margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid #ddd; }
-      .post-title { font-size: 28px; margin: 0 0 10px 0; }
-      .post-title a { text-decoration: none; color: #1A1A1A; transition: 0.2s; }
-      .post-title a:hover { opacity: 0.7; }
-      .post-meta { color: #666; font-family: sans-serif; font-size: 14px; margin-bottom: 15px; }
-      .post-excerpt { font-size: 16px; color: #444; line-height: 1.6; margin-bottom: 20px; }
-      
-      .read-more { font-family: sans-serif; font-size: 14px; font-weight: bold; text-transform: uppercase; text-decoration: none; color: #1A1A1A; border: 1px solid #1A1A1A; padding: 8px 16px; border-radius: 4px; transition: 0.2s; display: inline-block; }
-      .read-more:hover { background-color: #1A1A1A; color: #F9F9F7; }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <a href="/" class="back-link">← Back to Home</a>
-      
-      <h1 class="section-title">Campus News & Events</h1>
-      
-      <div class="post-list">
-        {/* This loop draws a card for every article in the database */}
-        {sortedPosts.map(post => (
-          <div class="post-item">
-            <h2 class="post-title">
-              <a href={`/campus/${post.id || post.slug}`}>{post.data.title}</a>
-            </h2>
-            <div class="post-meta">
-              By {post.data.author} | {new Date(post.data.publishDate).toLocaleDateString()}
-            </div>
-            <p class="post-excerpt">
-              {post.body ? post.body.slice(0, 180) + (post.body.length > 180 ? '...' : '') : ''}
-            </p>
-            <a href={`/campus/${post.id || post.slug}`} class="read-more">Read Dispatch</a>
+<BaseLayout title="Campus News | Nahor">
+  <style>
+    .container { max-width: 650px; margin: 60px auto; padding: 0 20px; }
+    .section-title { font-size: 36px; margin: 0 0 40px 0; border-bottom: 2px solid #1A1A1A; padding-bottom: 10px; font-family: serif; }
+    
+    .post-item { margin-bottom: 40px; padding-bottom: 30px; border-bottom: 1px solid #ddd; }
+    .post-title { font-size: 28px; margin: 0 0 10px 0; font-family: serif;}
+    .post-title a { text-decoration: none; color: #1A1A1A; transition: 0.2s; }
+    .post-title a:hover { opacity: 0.7; }
+    .post-meta { color: #666; font-family: sans-serif; font-size: 14px; margin-bottom: 15px; }
+    .post-excerpt { font-size: 16px; color: #444; line-height: 1.6; margin-bottom: 20px; font-family: serif;}
+    
+    .read-more { font-family: sans-serif; font-size: 14px; font-weight: bold; text-transform: uppercase; text-decoration: none; color: #1A1A1A; border: 1px solid #1A1A1A; padding: 8px 16px; border-radius: 4px; transition: 0.2s; display: inline-block; }
+    .read-more:hover { background-color: #1A1A1A; color: #F9F9F7; }
+  </style>
+
+  <div class="container">
+    <h1 class="section-title">Campus News & Events</h1>
+    
+    <div class="post-list">
+      {sortedPosts.map(post => (
+        <div class="post-item">
+          <h2 class="post-title">
+            <a href={`/campus/${post.id}`}>{post.data.title}</a>
+          </h2>
+          <div class="post-meta">
+            By {post.data.author} | {new Date(post.data.publishDate).toLocaleDateString()}
           </div>
-        ))}
-      </div>
-      
+          <p class="post-excerpt">
+            {post.body ? post.body.slice(0, 180) + (post.body.length > 180 ? '...' : '') : ''}
+          </p>
+          <a href={`/campus/${post.id}`} class="read-more">Read Dispatch</a>
+        </div>
+      ))}
     </div>
-  </body>
-</html>
+  </div>
+</BaseLayout>
