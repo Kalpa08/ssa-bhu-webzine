@@ -1,0 +1,20 @@
+---
+import GalleryLayout from '../../layouts/GalleryLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('canvas');
+  return posts.map(post => ({ params: { id: post.id }, props: { post } }));
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+<GalleryLayout 
+  title={post.data.title} 
+  artist={post.data.author} 
+  publishDate={post.data.publishDate} 
+  image={post.data.image}
+  medium={post.data.medium}
+>
+  <Content />
+</GalleryLayout>
