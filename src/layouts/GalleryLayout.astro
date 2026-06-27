@@ -1,22 +1,44 @@
-import '../styles/global.css';
-const { frontmatter } = Astro.props;
 ---
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>{frontmatter.title} | Nahor Webzine Gallery</title>
-  </head>
-  <body class="bg-zinc-900 text-magazine-paper font-sans min-h-screen">
-    <main class="max-w-5xl mx-auto py-12 px-6">
-      <header class="mb-10 text-center border-b border-zinc-700 pb-6">
-        <h1 class="text-3xl font-serif font-bold mb-2">{frontmatter.title}</h1>
-        <p class="text-zinc-400">Artwork by {frontmatter.author}</p>
-      </header>
-      <div class="gallery-container">
+import BaseLayout from './BaseLayout.astro';
+const { title, artist, publishDate, image, medium } = Astro.props;
+---
+
+<BaseLayout title={`${title} | Nahor Canvas`}>
+  <style>
+    .gallery-container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+    
+    /* The Artwork Frame */
+    .artwork-wrapper { width: 100%; display: flex; justify-content: center; padding: 20px 0; margin-bottom: 30px; }
+    .artwork-wrapper img { max-width: 100%; max-height: 75vh; object-fit: contain; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-radius: 2px; }
+    
+    /* The Museum Placard */
+    .placard { max-width: 600px; margin: 0 auto 60px auto; padding: 30px; background-color: #fff; border-left: 4px solid #0A3B2C; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+    .art-title { font-size: 32px; font-family: 'Playfair Display', serif; margin: 0 0 12px 0; color: #1A1A1A; line-height: 1.2; }
+    .art-meta { font-family: 'Inter', sans-serif; font-size: 13px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
+    .art-medium { font-weight: 700; color: #0A3B2C; }
+    
+    .art-caption { font-size: 16px; line-height: 1.8; color: #444; font-family: 'Playfair Display', serif; }
+  </style>
+
+  <div class="gallery-container">
+    
+    <!-- Full width image container -->
+    <div class="artwork-wrapper">
+      <img src={image} alt={title} />
+    </div>
+    
+    <!-- Museum Placard UI -->
+    <div class="placard">
+      <h1 class="art-title">{title}</h1>
+      <div class="art-meta">
+        By {artist} &nbsp;|&nbsp; <span class="art-medium">{medium}</span> &nbsp;|&nbsp; {new Date(publishDate).toLocaleDateString()}
+      </div>
+      
+      <!-- The Artist Statement / Caption gets injected here -->
+      <div class="art-caption">
         <slot />
       </div>
-    </main>
-  </body>
-</html>
-EOF
+    </div>
+
+  </div>
+</BaseLayout>
