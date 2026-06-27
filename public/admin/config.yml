@@ -2,6 +2,7 @@ backend:
   name: github
   repo: Kalpa08/ssa-bhu-webzine
   branch: main
+  base_url: https://nahor-auth.dihingiakalpa.workers.dev
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
