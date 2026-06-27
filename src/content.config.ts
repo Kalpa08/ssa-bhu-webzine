@@ -1,36 +1,49 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-// We define the blueprint once to keep the code clean
-const articleSchema = z.object({
+// A reusable schema for all our text-based articles
+const standardTextSchema = z.object({
   title: z.string(),
   author: z.string(),
-  publishDate: z.date(),
-  coverImage: z.string().optional(),
-  tags: z.array(z.string()).default([]),
-  featured: z.boolean().default(false),
+  publishDate: z.coerce.date(),
 });
 
-// We apply the blueprint to each section of your magazine
+const campus = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/campus" }),
+  schema: standardTextSchema,
+});
+
+const echoes = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/echoes" }),
+  schema: standardTextSchema,
+});
+
+const interfaceCollection = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/interface" }),
+  schema: standardTextSchema,
+});
+
+const dialogues = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/dialogues" }),
+  schema: standardTextSchema,
+});
+
+// A specialized schema strictly for visual art
+const canvas = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/canvas" }),
+  schema: z.object({
+    title: z.string(),
+    author: z.string(),
+    publishDate: z.coerce.date(),
+    image: z.string(), // Requires an image path
+    medium: z.enum(["Painting", "Photography", "Digital Art", "Mixed Media"]),
+  }),
+});
+
 export const collections = {
-  'campus': defineCollection({
-    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/campus" }),
-    schema: articleSchema
-  }),
-  'interface': defineCollection({
-    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/interface" }),
-    schema: articleSchema
-  }),
-  'echoes': defineCollection({
-    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/echoes" }),
-    schema: articleSchema
-  }),
-  'dialogues': defineCollection({
-    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/dialogues" }),
-    schema: articleSchema
-  }),
-  'canvas': defineCollection({
-    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/canvas" }),
-    schema: articleSchema
-  }),
+  campus,
+  echoes,
+  interface: interfaceCollection,
+  dialogues,
+  canvas,
 };

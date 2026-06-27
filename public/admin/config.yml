@@ -2,14 +2,13 @@ backend:
   name: github
   repo: Kalpa08/ssa-bhu-webzine
   branch: main
-  base_url: https://nahor-auth.dihingiakalpa.workers.dev
-
-media_folder: "public/images/uploads"
-public_folder: "/images/uploads"
+  
+media_folder: "public/assets/uploads"
+public_folder: "/assets/uploads"
 
 collections:
   - name: "campus"
-    label: "Campus (News/Events)"
+    label: "Campus (News)"
     folder: "src/content/campus"
     create: true
     slug: "{{year}}-{{month}}-{{slug}}"
@@ -17,13 +16,10 @@ collections:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Author", name: "author", widget: "string"}
       - {label: "Publish Date", name: "publishDate", widget: "datetime"}
-      - {label: "Cover Image", name: "coverImage", widget: "image", required: false}
-      - {label: "Tags", name: "tags", widget: "list", default: ["news"]}
-      - {label: "Featured", name: "featured", widget: "boolean", default: false}
       - {label: "Body", name: "body", widget: "markdown"}
-
+      
   - name: "echoes"
-    label: "Echoes (Poetry/Stories)"
+    label: "Echoes (Literature)"
     folder: "src/content/echoes"
     create: true
     slug: "{{year}}-{{month}}-{{slug}}"
@@ -31,7 +27,39 @@ collections:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Author", name: "author", widget: "string"}
       - {label: "Publish Date", name: "publishDate", widget: "datetime"}
-      - {label: "Cover Image", name: "coverImage", widget: "image", required: false}
-      - {label: "Tags", name: "tags", widget: "list", default: ["literature"]}
-      - {label: "Featured", name: "featured", widget: "boolean", default: false}
       - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "interface"
+    label: "Interface (Science/Tech)"
+    folder: "src/content/interface"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Author", name: "author", widget: "string"}
+      - {label: "Publish Date", name: "publishDate", widget: "datetime"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "dialogues"
+    label: "Dialogues (Debates)"
+    folder: "src/content/dialogues"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Author", name: "author", widget: "string"}
+      - {label: "Publish Date", name: "publishDate", widget: "datetime"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "canvas"
+    label: "Canvas (Fine Arts/Photo)"
+    folder: "src/content/canvas"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    fields:
+      - {label: "Artwork Title", name: "title", widget: "string"}
+      - {label: "Artist", name: "author", widget: "string"}
+      - {label: "Publish Date", name: "publishDate", widget: "datetime"}
+      - {label: "Artwork File", name: "image", widget: "image"}
+      - {label: "Medium", name: "medium", widget: "select", options: ["Painting", "Photography", "Digital Art", "Mixed Media"]}
+      - {label: "Artist Statement / Caption", name: "body", widget: "markdown", required: false}
