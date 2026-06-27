@@ -1,0 +1,46 @@
+---
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('campus');
+  return posts.map(post => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{post.data.title} | Nahor</title>
+    <style>
+      body { background-color: #F9F9F7 !important; color: #1A1A1A !important; font-family: serif; }
+      .container { max-width: 650px; margin: 60px auto; padding: 0 20px; }
+      .back-link { font-family: sans-serif; font-size: 14px; text-decoration: none; color: #666; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+      .back-link:hover { color: #1A1A1A; }
+      .title { font-size: 42px; margin: 20px 0 10px 0; line-height: 1.2; }
+      .meta { color: #666; font-family: sans-serif; font-size: 14px; border-bottom: 1px solid #ddd; padding-bottom: 20px; margin-bottom: 30px; }
+      .content { font-size: 18px; line-height: 1.8; color: #333; }
+      .content p { margin-bottom: 1.5em; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <a href="/" class="back-link">← Back to Home</a>
+      
+      <h1 class="title">{post.data.title}</h1>
+      <div class="meta">
+        By {post.data.author} | {new Date(post.data.publishDate).toLocaleDateString()}
+      </div>
+      
+      <div class="content">
+        <Content />
+      </div>
+    </div>
+  </body>
+</html>
