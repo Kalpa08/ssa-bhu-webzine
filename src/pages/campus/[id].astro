@@ -1,21 +1,17 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('campus');
-  return posts.map(post => {
-    // Bulletproof routing that supports all template versions
-    const matchId = post.id || post.slug;
-    return {
-      params: { id: matchId },
-      props: { post },
-    };
-  });
+  return posts.map(post => ({
+    params: { id: post.id },
+    props: { post },
+  }));
 }
 
 const { post } = Astro.props;
-// The classic compiler method that will guarantee a successful build
-const { Content } = await post.render();
+// The strict Astro v5 render method
+const { Content } = await render(post);
 ---
 
 <html lang="en">
