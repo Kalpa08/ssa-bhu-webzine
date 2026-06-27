@@ -18,14 +18,14 @@ const { title = "Nahor | Students' Society of Assam" } = Astro.props;
     </style>
   </head>
   <body>
-    <!-- Top Navigation Bar (Now global!) -->
+    <!-- Added the Echoes link here -->
     <nav class="nav">
       <a href="/">Home</a>
       <a href="/campus">Campus News</a>
+      <a href="/echoes">Echoes</a>
       <a href="/admin">Editorial Login</a>
     </nav>
 
-    <!-- The magic slot where individual page content gets injected -->
     <slot />
     
   </body>
