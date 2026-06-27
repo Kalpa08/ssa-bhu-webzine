@@ -1,11 +1,19 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-// A reusable schema for all our text-based articles
+// Updated schema to accept optional cover images!
 const standardTextSchema = z.object({
   title: z.string(),
   author: z.string(),
   publishDate: z.coerce.date(),
+  image: z.string().optional(), 
+});
+
+// A reusable schema for all our text-based articles
+const standardTextSchema = z.object({
+  title: z.string(),
+  author: z.string(),
+  pstandardTextSchemaublishDate: z.coerce.date(),
 });
 
 const campus = defineCollection({

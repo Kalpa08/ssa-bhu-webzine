@@ -4,32 +4,28 @@ import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('echoes');
-  return posts.map(post => ({
-    params: { id: post.id },
-    props: { post },
-  }));
+  return posts.map(post => ({ params: { id: post.id }, props: { post } }));
 }
-
 const { post } = Astro.props;
 const { Content } = await render(post);
 ---
-
 <BaseLayout title={`${post.data.title} | Nahor`}>
-  <style>
-    .container { max-width: 650px; margin: 60px auto; padding: 0 20px; }
-    .title { font-size: 42px; margin: 20px 0 10px 0; line-height: 1.2; }
-    .meta { color: #666; font-family: sans-serif; font-size: 14px; border-bottom: 1px solid #ddd; padding-bottom: 20px; margin-bottom: 30px; }
-    .content { font-size: 18px; line-height: 1.8; color: #333; }
-    .content p { margin-bottom: 1.5em; }
-  </style>
+  <div style="max-width: 650px; margin: 60px auto; padding: 0 20px;">
+    
+    <!-- Dynamic Image Block: Only shows if an image was uploaded -->
+    {post.data.image && (
+      <img 
+        src={post.data.image} 
+        alt={post.data.title} 
+        style="width: 100%; max-height: 450px; object-fit: cover; margin-bottom: 30px; border-radius: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);" 
+      />
+    )}
 
-  <div class="container">
-    <h1 class="title">{post.data.title}</h1>
-    <div class="meta">
+    <h1 style="font-size: 42px; margin: 0 0 10px 0; line-height: 1.2;">{post.data.title}</h1>
+    <div style="font-family: 'Inter', sans-serif; font-size: 14px; color: #666; border-bottom: 1px solid #ddd; padding-bottom: 20px; margin-bottom: 30px;">
       By {post.data.author} | {new Date(post.data.publishDate).toLocaleDateString()}
     </div>
-    
-    <div class="content">
+    <div style="font-size: 18px; line-height: 1.8; color: #333;">
       <Content />
     </div>
   </div>
