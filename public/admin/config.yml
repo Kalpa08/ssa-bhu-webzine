@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: Kalpa08/ssa-bhu-webzine
   branch: main
 
 media_folder: "public/images/uploads"
