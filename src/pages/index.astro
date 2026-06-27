@@ -1,5 +1,17 @@
 ---
 import '../styles/global.css';
+import { getCollection } from 'astro:content';
+
+// 1. Fetch all published articles from the "campus" collection
+const allCampusPosts = await getCollection('campus');
+
+// 2. Sort them to ensure the newest one is always first
+const sortedPosts = allCampusPosts.sort(
+  (a, b) => new Date(b.data.publishDate).valueOf() - new Date(a.data.publishDate).valueOf()
+);
+
+// 3. Grab the single newest post
+const latestPost = sortedPosts[0];
 ---
 
 <html lang="en">
@@ -13,6 +25,7 @@ import '../styles/global.css';
       .btn-ink { background-color: #1A1A1A; color: #F9F9F7; }
       .btn-outline { border: 1px solid #1A1A1A; color: #1A1A1A; }
       .btn:hover { opacity: 0.8; }
+      .post-card { margin-top: 60px; padding: 24px; border-top: 1px solid #ddd; text-align: left; }
     </style>
   </head>
   <body>
@@ -30,9 +43,21 @@ import '../styles/global.css';
       </p>
       
       <div style="display: flex; gap: 15px; justify-content: center;">
-        <a href="#" class="btn btn-ink">Read the Latest</a>
+        <!-- We dynamically link the button to the newest post! -->
+        <a href={latestPost ? `/campus/${latestPost.slug}` : "#"} class="btn btn-ink">Read the Latest</a>
         <a href="/admin" class="btn btn-outline">Editorial Login</a>
       </div>
+
+      <!-- We dynamically display the latest article data! -->
+      {latestPost && (
+        <div class="post-card">
+          <p style="font-size: 12px; color: #666; text-transform: uppercase; font-weight: bold; margin-bottom: 8px;">Latest Dispatch</p>
+          <a href={`/campus/${latestPost.slug}`} style="text-decoration: none; color: #1A1A1A;">
+            <h2 style="font-family: serif; font-size: 28px; margin: 0 0 8px 0;">{latestPost.data.title}</h2>
+          </a>
+          <p style="font-size: 14px; color: #666; margin: 0;">By {latestPost.data.author}</p>
+        </div>
+      )}
 
     </main>
   </body>
