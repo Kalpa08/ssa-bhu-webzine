@@ -1,4 +1,53 @@
-<body class="bg-paper text-ink font-serif antialiased">
+---
+import '../styles/global.css';
+const { title = "Nahor | Art. Literature. Science. Journeys." } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    
+    <!-- Google Fonts: Playfair Display (Serif) & Inter (Sans-Serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+      body { background-color: #F9F9F7; color: #1A1A1A; font-family: 'Playfair Display', serif; margin: 0; padding: 0;}
+      
+      /* Modern Magazine Header Styles */
+      .site-header { border-bottom: 1px solid #ddd; padding: 0 20px; font-family: 'Inter', sans-serif; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; background-color: #fff;}
+      .header-container { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; height: 80px; }
+      
+      .nav-left a, .nav-center a, .nav-right a { color: #1A1A1A; text-decoration: none; transition: 0.2s; }
+      .nav-left a:hover, .nav-center a:hover { color: #0A3B2C; }
+      
+      .nav-center { display: flex; gap: 30px; }
+      
+      /* Submit Button */
+      .nav-right a { border: 1px solid #1A1A1A; padding: 10px 20px; border-radius: 3px; }
+      .nav-right a:hover { background-color: #1A1A1A; color: #F9F9F7; }
+
+      /* Mobile Menu Elements */
+      .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 10px; }
+      .hamburger span { display: block; width: 25px; height: 2px; background-color: #1A1A1A; margin: 5px 0; transition: 0.3s; }
+      
+      .mobile-menu { display: none; background-color: #F9F9F7; border-bottom: 1px solid #ddd; text-align: center; padding: 10px 0; font-family: 'Inter', sans-serif; font-size: 12px; text-transform: uppercase; font-weight: 600; letter-spacing: 1px;}
+      .mobile-menu a { display: block; padding: 15px; color: #1A1A1A; text-decoration: none; border-bottom: 1px solid #eee; }
+      .mobile-menu a:last-child { border-bottom: none; }
+      .mobile-menu a:hover { color: #0A3B2C; background-color: #f0f0f0; }
+      
+      /* Responsive Breakpoints */
+      @media (max-width: 850px) {
+        .nav-center, .nav-right { display: none; }
+        .hamburger { display: block; }
+        .mobile-menu.active { display: block; }
+      }
+    </style>
+  </head>
+  <body>
     
     <!-- Premium Navigation Header -->
     <header class="site-header">
@@ -56,3 +105,4 @@
       }
     </script>
   </body>
+</html>
