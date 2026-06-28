@@ -2,19 +2,16 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-// Fetch all content from the new premium collections
 const echoes = await getCollection('echoes');
 const interfacePosts = await getCollection('interface');
 const canvas = await getCollection('canvas');
 const journeys = await getCollection('journeys');
 
-// Helper function to find the newest post in a category
 const getLatest = (posts) => {
   if (!posts || posts.length === 0) return null;
   return posts.sort((a, b) => new Date(b.data.publishDate).valueOf() - new Date(a.data.publishDate).valueOf())[0];
 };
 
-// Bundle the latest posts for the dynamic grid
 const sections = [
   { title: "Canvas", post: getLatest(canvas), link: "/canvas", label: "Visual Arts" },
   { title: "Echoes", post: getLatest(echoes), link: "/echoes", label: "Literature" },
@@ -24,7 +21,6 @@ const sections = [
 ---
 <BaseLayout title="Nahor | Art. Literature. Science. Journeys.">
   
-  <!-- Premium Hero Section -->
   <div style="text-align: center; padding: 90px 20px; border-bottom: 1px solid #ddd; background-color: #fff;">
     <h2 style="font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 3px; color: #666; text-transform: uppercase; margin-bottom: 25px;">
       Students' Society of Assam, BHU
@@ -38,7 +34,6 @@ const sections = [
     </p>
   </div>
 
-  <!-- Dynamic Content Grid -->
   <div style="max-width: 1150px; margin: 70px auto; padding: 0 20px;">
     <h3 style="font-family: 'Inter', sans-serif; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 40px; border-bottom: 2px solid #1A1A1A; padding-bottom: 10px;">
       Latest Dispatches
@@ -48,12 +43,10 @@ const sections = [
       {sections.map(section => (
         <div style="display: flex; flex-direction: column;">
           
-          <!-- Category Header -->
           <a href={section.link} style="font-family: 'Inter', sans-serif; font-size: 12px; color: #0A3B2C; text-decoration: none; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 15px; display: inline-block;">
             {section.label} &rarr;
           </a>
           
-          <!-- Article Card -->
           {section.post ? (
             <div style="background: #fff; border: 1px solid #eaeaea; box-shadow: 0 4px 15px rgba(0,0,0,0.03); flex-grow: 1; display: flex; flex-direction: column; transition: transform 0.2s ease;">
               {section.post.data.image && (
@@ -71,7 +64,6 @@ const sections = [
               </div>
             </div>
           ) : (
-            <!-- Placeholder for Empty Categories -->
             <div style="background: #f9f9f7; border: 1px dashed #ccc; padding: 40px 20px; text-align: center; flex-grow: 1; display: flex; align-items: center; justify-content: center;">
               <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 1px;">Awaiting Publication</p>
             </div>
