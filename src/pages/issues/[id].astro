@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('issues');
+  return posts.map(post => ({ params: { id: post.id }, props: { post } }));
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+<BaseLayout title={`${post.data.title} | Nahor`}>
+  <div style="max-width: 800px; margin: 60px auto; padding: 0 20px; display: flex; flex-direction: column; align-items: center;">
+    
+    <img src={post.data.image} alt={post.data.title} style="width: 100%; max-width: 450px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); margin-bottom: 40px;" />
+    
+    <h1 style="font-size: 42px; margin: 0 0 15px 0; line-height: 1.2; text-align: center;">{post.data.title}</h1>
+    
+    <div style="font-family: 'Inter', sans-serif; font-size: 14px; color: #666; border-bottom: 1px solid #ddd; padding-bottom: 25px; margin-bottom: 40px; width: 100%; text-align: center; text-transform: uppercase; letter-spacing: 1.5px;">
+      Published: {new Date(post.data.publishDate).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+    </div>
+    
+    <div style="font-size: 18px; line-height: 1.8; color: #333; width: 100%; max-width: 650px;">
+      <Content />
+    </div>
+  </div>
+</BaseLayout>
