@@ -2,23 +2,14 @@ backend:
   name: github
   repo: Kalpa08/ssa-bhu-webzine
   branch: main
+
+# Activates the Draft -> Review -> Publish pipeline
+publish_mode: editorial_workflow
   
 media_folder: "public/assets/uploads"
 public_folder: "/assets/uploads"
 
 collections:
-  - name: "campus"
-    label: "Campus (News)"
-    folder: "src/content/campus"
-    create: true
-    slug: "{{year}}-{{month}}-{{slug}}"
-    fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Author", name: "author", widget: "string"}
-      - {label: "Publish Date", name: "publishDate", widget: "datetime"}
-      - {label: "Featured Image", name: "image", widget: "image", required: false}
-      - {label: "Body", name: "body", widget: "markdown"}
-      
   - name: "echoes"
     label: "Echoes (Literature)"
     folder: "src/content/echoes"
@@ -32,7 +23,7 @@ collections:
       - {label: "Body", name: "body", widget: "markdown"}
 
   - name: "interface"
-    label: "Interface (Science/Tech)"
+    label: "Interface (Science & Technology)"
     folder: "src/content/interface"
     create: true
     slug: "{{year}}-{{month}}-{{slug}}"
@@ -43,20 +34,8 @@ collections:
       - {label: "Featured Image", name: "image", widget: "image", required: false}
       - {label: "Body", name: "body", widget: "markdown"}
 
-  - name: "dialogues"
-    label: "Dialogues (Debates)"
-    folder: "src/content/dialogues"
-    create: true
-    slug: "{{year}}-{{month}}-{{slug}}"
-    fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Author", name: "author", widget: "string"}
-      - {label: "Publish Date", name: "publishDate", widget: "datetime"}
-      - {label: "Featured Image", name: "image", widget: "image", required: false}  
-      - {label: "Body", name: "body", widget: "markdown"}
-
   - name: "canvas"
-    label: "Canvas (Fine Arts/Photo)"
+    label: "Canvas (Fine Arts)"
     folder: "src/content/canvas"
     create: true
     slug: "{{year}}-{{month}}-{{slug}}"
@@ -67,3 +46,26 @@ collections:
       - {label: "Artwork File", name: "image", widget: "image"}
       - {label: "Medium", name: "medium", widget: "select", options: ["Painting", "Photography", "Digital Art", "Mixed Media"]}
       - {label: "Artist Statement / Caption", name: "body", widget: "markdown", required: false}
+
+  - name: "journeys"
+    label: "Journeys (Travel & Culture)"
+    folder: "src/content/journeys"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Author", name: "author", widget: "string"}
+      - {label: "Publish Date", name: "publishDate", widget: "datetime"}
+      - {label: "Featured Image", name: "image", widget: "image", required: false}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "issues"
+    label: "Issues (Curated Editions)"
+    folder: "src/content/issues"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    fields:
+      - {label: "Issue Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "publishDate", widget: "datetime"}
+      - {label: "Cover Image", name: "image", widget: "image"}
+      - {label: "Editorial / Description", name: "body", widget: "markdown"}
