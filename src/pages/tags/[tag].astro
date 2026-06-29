@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allEchoes = await getCollection('echoes');
+  const allInterface = await getCollection('interface');
+  const allCanvas = await getCollection('canvas');
+  const allJourneys = await getCollection('journeys');
+  
+  // Combine all pillars into one massive array
+  const allPosts = [...allEchoes, ...allInterface, ...allCanvas, ...allJourneys];
+  
+  // Extract every unique tag used across the entire site
+  const uniqueTags = [...new Set(allPosts.flatMap(post => post.data.tags || []))];
+  
+  // Generate a route for each tag, passing the matching posts as props
+  return uniqueTags.map(tag => {
+    const filteredPosts = allPosts.filter(post => post.data.tags?.includes(tag));
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+<BaseLayout title={`#${tag} | Nahor`}>
+  <div style="max-width: 1150px; margin: 60px auto; padding: 0 20px;">
+    
+    <h1 style="font-family: 'Playfair Display', serif; font-size: 42px; margin-bottom: 40px; border-bottom: 2px solid #1A1A1A; padding-bottom: 10px;">
+      Filed Under: <span style="color: #666; font-style: italic;">#{tag}</span>
+    </h1>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px;">
+      {posts.map(post => (
+        <div style="display: flex; flex-direction: column; border: 1px solid #eaeaea; background: #fff; transition: transform 0.2s ease;">
+          {post.data.image && (
+            <a href={`/${post.collection}/${post.id}`} style="display: block;">
+              <img src={post.data.image} alt={post.data.title} style="width: 100%; height: 220px; object-fit: cover; border-bottom: 1px solid #eaeaea;" />
+            </a>
+          )}
+          <div style="padding: 25px; display: flex; flex-direction: column; flex-grow: 1;">
+            <div style="font-family: 'Inter', sans-serif; font-size: 11px; color: #0A3B2C; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px;">
+              {post.data.category}
+            </div>
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 24px; margin: 0 0 12px 0; line-height: 1.3;">
+              <a href={`/${post.collection}/${post.id}`} style="color: #1A1A1A; text-decoration: none;">{post.data.title}</a>
+            </h2>
+            <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #666; margin-top: auto;">
+              By {post.data.author}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+  </div>
+</BaseLayout>
