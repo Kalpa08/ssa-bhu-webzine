@@ -1,5 +1,5 @@
 ---
-import GalleryLayout from '../../layouts/GalleryLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -9,12 +9,29 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 ---
-<GalleryLayout 
-  title={post.data.title} 
-  artist={post.data.author} 
-  publishDate={post.data.publishDate} 
-  image={post.data.image}
-  medium={post.data.medium}
->
-  <Content />
-</GalleryLayout>
+<BaseLayout title={`${post.data.title} | Nahor`}>
+  <article style="max-width: 900px; margin: 60px auto; padding: 0 20px; text-align: center;">
+    <div style="font-family: 'Inter', sans-serif; font-size: 12px; color: #0A3B2C; text-transform: uppercase; font-weight: 700; letter-spacing: 1.5px; margin-bottom: 15px;">
+      {post.data.category}
+    </div>
+    <h1 style="font-family: 'Playfair Display', serif; font-size: 42px; margin: 0 0 15px 0; line-height: 1.2;">{post.data.title}</h1>
+    <div style="font-family: 'Inter', sans-serif; font-size: 14px; color: #666; margin-bottom: 40px;">
+      By {post.data.author} {post.data.location && ` | ${post.data.location}`} | {new Date(post.data.publishDate).toLocaleDateString()}
+    </div>
+    
+    <img src={post.data.image} alt={post.data.title} style="width: 100%; max-height: 70vh; object-fit: contain; background: #fff; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px;" />
+    
+    <div style="font-size: 16px; line-height: 1.8; color: #444; font-family: 'Inter', sans-serif; text-align: left; max-width: 650px; margin: 0 auto;">
+      <Content />
+    </div>
+
+    {post.data.tags && post.data.tags.length > 0 && (
+      <div style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #eaeaea; max-width: 650px; margin-left: auto; margin-right: auto; text-align: left;">
+        <span style="font-family: 'Inter', sans-serif; font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-right: 10px;">Filed Under:</span>
+        {post.data.tags.map(tag => (
+          <span style="display: inline-block; background: #f0f0f0; color: #333; padding: 4px 10px; border-radius: 20px; font-family: 'Inter', sans-serif; font-size: 12px; margin: 0 5px 5px 0;">#{tag}</span>
+        ))}
+      </div>
+    )}
+  </article>
+</BaseLayout>

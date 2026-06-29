@@ -10,16 +10,27 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 <BaseLayout title={`${post.data.title} | Nahor`}>
-  <div style="max-width: 650px; margin: 60px auto; padding: 0 20px;">
-    {post.data.image && (
-      <img src={post.data.image} alt={post.data.title} style="width: 100%; max-height: 450px; object-fit: cover; margin-bottom: 30px; border-radius: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);" />
-    )}
-    <h1 style="font-size: 42px; margin: 0 0 10px 0; line-height: 1.2;">{post.data.title}</h1>
+  <article style="max-width: 650px; margin: 60px auto; padding: 0 20px;">
+    <div style="font-family: 'Inter', sans-serif; font-size: 12px; color: #0A3B2C; text-transform: uppercase; font-weight: 700; letter-spacing: 1.5px; margin-bottom: 15px;">
+      {post.data.category}
+    </div>
+    <h1 style="font-family: 'Playfair Display', serif; font-size: 42px; margin: 0 0 15px 0; line-height: 1.2;">{post.data.title}</h1>
     <div style="font-family: 'Inter', sans-serif; font-size: 14px; color: #666; border-bottom: 1px solid #ddd; padding-bottom: 20px; margin-bottom: 30px;">
       By {post.data.author} | {new Date(post.data.publishDate).toLocaleDateString()}
     </div>
-    <div style="font-size: 18px; line-height: 1.8; color: #333;">
+    {post.data.image && (
+      <img src={post.data.image} alt={post.data.title} style="width: 100%; max-height: 450px; object-fit: cover; margin-bottom: 40px; border-radius: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);" />
+    )}
+    <div style="font-size: 18px; line-height: 1.8; color: #333; font-family: 'Playfair Display', serif;">
       <Content />
     </div>
-  </div>
+    {post.data.tags && post.data.tags.length > 0 && (
+      <div style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #eaeaea;">
+        <span style="font-family: 'Inter', sans-serif; font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-right: 10px;">Filed Under:</span>
+        {post.data.tags.map(tag => (
+          <span style="display: inline-block; background: #f0f0f0; color: #333; padding: 4px 10px; border-radius: 20px; font-family: 'Inter', sans-serif; font-size: 12px; margin: 0 5px 5px 0;">#{tag}</span>
+        ))}
+      </div>
+    )}
+  </article>
 </BaseLayout>
