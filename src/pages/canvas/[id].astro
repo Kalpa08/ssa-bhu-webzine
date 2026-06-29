@@ -29,7 +29,7 @@ const { Content } = await render(post);
       <div style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #eaeaea; max-width: 650px; margin-left: auto; margin-right: auto; text-align: left;">
         <span style="font-family: 'Inter', sans-serif; font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-right: 10px;">Filed Under:</span>
         {post.data.tags.map(tag => (
-          <span style="display: inline-block; background: #f0f0f0; color: #333; padding: 4px 10px; border-radius: 20px; font-family: 'Inter', sans-serif; font-size: 12px; margin: 0 5px 5px 0;">#{tag}</span>
+          <a href={`/tags/${tag}`} style="display: inline-block; background: #f0f0f0; color: #333; padding: 4px 10px; border-radius: 20px; font-family: .Inter., sans-serif; font-size: 12px; margin: 0 5px 5px 0; text-decoration: none;">#{tag}</a>
         ))}
       </div>
     )}
