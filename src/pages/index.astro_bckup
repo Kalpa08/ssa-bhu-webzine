@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const echoes = await getCollection('echoes');
+const interfacePosts = await getCollection('interface');
+const canvas = await getCollection('canvas');
+const journeys = await getCollection('journeys');
+
+const getLatest = (posts) => {
+  if (!posts || posts.length === 0) return null;
+  return posts.sort((a, b) => new Date(b.data.publishDate).valueOf() - new Date(a.data.publishDate).valueOf())[0];
+};
+
+const sections = [
+  { title: "Canvas", post: getLatest(canvas), link: "/canvas", label: "Visual Arts" },
+  { title: "Echoes", post: getLatest(echoes), link: "/echoes", label: "Literature" },
+  { title: "Interface", post: getLatest(interfacePosts), link: "/interface", label: "Science & Tech" },
+  { title: "Journeys", post: getLatest(journeys), link: "/journeys", label: "Travel & Culture" }
+];
+---
+<BaseLayout title="Nahor | Art. Literature. Science. Journeys.">
+  
+  <div style="text-align: center; padding: 90px 20px; border-bottom: 1px solid #ddd; background-color: #fff;">
+    <h2 style="font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 3px; color: #666; text-transform: uppercase; margin-bottom: 25px;">
+      Students' Society of Assam, BHU
+    </h2>
+    <h1 style="font-family: 'Playfair Display', serif; font-size: 56px; color: #1A1A1A; margin: 0 0 25px 0; line-height: 1.1;">
+      A record of culture,<br/>
+      <span style="color: #666; font-style: italic;">and scholarly pursuit.</span>
+    </h1>
+    <p style="font-family: 'Playfair Display', serif; font-size: 20px; color: #0A3B2C; max-width: 600px; margin: 0 auto; letter-spacing: 1px;">
+      Art. Literature. Science & Technology. Journeys.
+    </p>
+  </div>
+
+  <div style="max-width: 1150px; margin: 70px auto; padding: 0 20px;">
+    <h3 style="font-family: 'Inter', sans-serif; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 40px; border-bottom: 2px solid #1A1A1A; padding-bottom: 10px;">
+      Latest Dispatches
+    </h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px;">
+      {sections.map(section => (
+        <div style="display: flex; flex-direction: column;">
+          
+          <a href={section.link} style="font-family: 'Inter', sans-serif; font-size: 12px; color: #0A3B2C; text-decoration: none; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 15px; display: inline-block;">
+            {section.label} &rarr;
+          </a>
+          
+          {section.post ? (
+            <div style="background: #fff; border: 1px solid #eaeaea; box-shadow: 0 4px 15px rgba(0,0,0,0.03); flex-grow: 1; display: flex; flex-direction: column; transition: transform 0.2s ease;">
+              {section.post.data.image && (
+                <a href={`${section.link}/${section.post.id}`} style="display: block;">
+                  <img src={section.post.data.image} alt={section.post.data.title} style="width: 100%; height: 220px; object-fit: cover; border-bottom: 1px solid #eaeaea;" />
+                </a>
+              )}
+              <div style="padding: 25px; flex-grow: 1; display: flex; flex-direction: column;">
+                <h4 style="font-family: 'Playfair Display', serif; font-size: 24px; margin: 0 0 12px 0; line-height: 1.3;">
+                  <a href={`${section.link}/${section.post.id}`} style="color: #1A1A1A; text-decoration: none;">{section.post.data.title}</a>
+                </h4>
+                <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #666; margin-top: auto; text-transform: uppercase; letter-spacing: 0.5px;">
+                  By {section.post.data.author}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div style="background: #f9f9f7; border: 1px dashed #ccc; padding: 40px 20px; text-align: center; flex-grow: 1; display: flex; align-items: center; justify-content: center;">
+              <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 1px;">Awaiting Publication</p>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+  
+</BaseLayout>
