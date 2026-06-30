@@ -1,3 +1,4 @@
+---
 import '../styles/global.css';
 const { frontmatter } = Astro.props;
 ---
@@ -15,10 +16,16 @@ const { frontmatter } = Astro.props;
           By {frontmatter.author} | {new Date(frontmatter.publishDate).toLocaleDateString()}
         </p>
       </header>
-      <article class="prose prose-lg prose-stone mx-auto font-serif prose-p:text-justify">
+      <article class="prose prose-lg prose-stone mx-auto font-serif">
         <slot />
       </article>
     </main>
   </body>
 </html>
-EOF
+
+<style is:global>
+  /* This forces the prose paragraphs to justify, overriding Tailwind's strict plugin */
+  article.prose p {
+    text-align: justify !important;
+  }
+</style>
