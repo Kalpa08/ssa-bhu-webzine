@@ -15,7 +15,7 @@ const { frontmatter } = Astro.props;
           By {frontmatter.author} | {new Date(frontmatter.publishDate).toLocaleDateString()}
         </p>
       </header>
-      <article class="prose prose-lg prose-stone mx-auto font-serif">
+      <article class="prose prose-lg prose-stone mx-auto font-serif text-justify">
         <slot />
       </article>
     </main>
