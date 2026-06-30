@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.prose p {
+.prose, .prose p, .prose div, .prose span {
   text-align: justify !important;
 }
