@@ -5,3 +5,8 @@
 .prose, .prose p, .prose div, .prose span {
   text-align: justify !important;
 }
+
+/* This targets every paragraph in every article on the site */
+article p {
+  text-align: justify !important;
+}
