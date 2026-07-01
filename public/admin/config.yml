@@ -79,7 +79,7 @@ collections:
     label: "Issues (Curated Editions)"
     folder: "src/content/issues"
     create: true
-    slug: "{{slug}}"
+    slug: "issue-{{issueNumber}}"
     fields:
       - {label: "Issue Number", name: "issueNumber", widget: "string", hint: "e.g., 01"}
       - {label: "Theme", name: "theme", widget: "string", hint: "e.g., Beginnings"}
