@@ -4,7 +4,7 @@ author: artist
 publishDate: 2026-07-01T15:41:00.000+05:30
 category: Photography
 location: vns
-issue: "01"
+issue: issue-01
 order: 9
 image: /assets/uploads/photo1.jpg
 ---
