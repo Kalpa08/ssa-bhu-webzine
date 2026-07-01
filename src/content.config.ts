@@ -10,8 +10,8 @@ const baseSchema = z.object({
   tags: z.array(z.string()).default([]).optional(),
 
   // Add these two new lines:
-  issue: z.string().optional(), // Links the article to an issue
-  order: z.number().default(99).optional(), // Controls the reading sequence
+  issue: reference('issues').optional(), 
+  order: z.number().default(99).optional(),
 });
 
 const echoes = defineCollection({
