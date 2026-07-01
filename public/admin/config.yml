@@ -21,9 +21,9 @@ collections:
       - {label: "Category", name: "category", widget: "select", options: ["Poetry", "Short Story", "Reflective Essay", "Memoir", "Letter", "Translation", "Flash Fiction"]}
       - {label: "Tags", name: "tags", widget: "list", field: {name: "tag", widget: "string"}, required: false}
       - {label: "Featured Image", name: "image", widget: "image", required: false}
-      - {label: "Body", name: "body", widget: "markdown"}
       - {label: "Issue Tag", name: "issue", widget: "string", hint: "e.g., issue-01"}
       - {label: "Reading Order", name: "order", widget: "number", value_type: "int", default: 99, hint: "Controls reading sequence (e.g., 10, 20, 30)"}
+      - {label: "Body", name: "body", widget: "markdown"}
 
   - name: "interface"
     label: "Interface (Science & Technology)"
@@ -37,9 +37,9 @@ collections:
       - {label: "Category", name: "category", widget: "select", options: ["Science", "Technology", "Artificial Intelligence", "Research Stories", "Mathematics", "Philosophy of Science", "Scientific Visualization"]}
       - {label: "Tags", name: "tags", widget: "list", field: {name: "tag", widget: "string"}, required: false}
       - {label: "Featured Image", name: "image", widget: "image", required: false}
-      - {label: "Body", name: "body", widget: "markdown"}
       - {label: "Issue Tag", name: "issue", widget: "string", hint: "e.g., issue-01"}
       - {label: "Reading Order", name: "order", widget: "number", value_type: "int", default: 99, hint: "Controls reading sequence (e.g., 10, 20, 30)"}
+      - {label: "Body", name: "body", widget: "markdown"}
 
   - name: "canvas"
     label: "Canvas (Fine Arts)"
@@ -53,10 +53,10 @@ collections:
       - {label: "Category", name: "category", widget: "select", options: ["Photography", "Painting", "Digital Art", "Illustration", "Sketch", "Mixed Media"]}
       - {label: "Location", name: "location", widget: "string", required: false}
       - {label: "Tags", name: "tags", widget: "list", field: {name: "tag", widget: "string"}, required: false}
-      - {label: "Artwork File", name: "image", widget: "image"}
-      - {label: "Artist Statement / Caption", name: "body", widget: "markdown", required: false}
       - {label: "Issue Tag", name: "issue", widget: "string", hint: "e.g., issue-01"}
       - {label: "Reading Order", name: "order", widget: "number", value_type: "int", default: 99, hint: "Controls reading sequence (e.g., 10, 20, 30)"}
+      - {label: "Artwork File", name: "image", widget: "image"}
+      - {label: "Artist Statement / Caption", name: "body", widget: "markdown", required: false}
 
   - name: "journeys"
     label: "Journeys (Travel & Culture)"
@@ -71,9 +71,9 @@ collections:
       - {label: "Location", name: "location", widget: "string", required: false}
       - {label: "Tags", name: "tags", widget: "list", field: {name: "tag", widget: "string"}, required: false}
       - {label: "Featured Image", name: "image", widget: "image", required: false}
-      - {label: "Body", name: "body", widget: "markdown"}
       - {label: "Issue Tag", name: "issue", widget: "string", hint: "e.g., issue-01"}
       - {label: "Reading Order", name: "order", widget: "number", value_type: "int", default: 99, hint: "Controls reading sequence (e.g., 10, 20, 30)"}
+      - {label: "Body", name: "body", widget: "markdown"}
 
   - name: "issues"
     label: "Issues (Curated Editions)"
