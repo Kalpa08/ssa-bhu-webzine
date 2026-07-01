@@ -21,99 +21,88 @@ const journeys = await getCollection('journeys');
 
 const allArticles = [...echoes, ...interfaceCol, ...canvas, ...journeys];
 
-// Safeguard: use .trim() to ignore accidental spaces typed in the CMS
+// Filter to ONLY include articles tagged with THIS issue's ID
 const issueArticles = allArticles.filter(article => article.data.issue?.trim() === issue.id);
 
-// Group articles by their pillar to build the sidebar menu
+// Group articles by their pillar for the Table of Contents
 const groupedArticles = {
-  canvas: issueArticles.filter(a => a.collection === 'canvas').sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)),
-  echoes: issueArticles.filter(a => a.collection === 'echoes').sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)),
-  interface: issueArticles.filter(a => a.collection === 'interface').sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)),
-  journeys: issueArticles.filter(a => a.collection === 'journeys').sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)),
+  "Canvas (Fine Arts)": issueArticles.filter(a => a.collection === 'canvas').sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)),
+  "Echoes (Literature)": issueArticles.filter(a => a.collection === 'echoes').sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)),
+  "Interface (Science & Technology)": issueArticles.filter(a => a.collection === 'interface').sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)),
+  "Journeys (Travel & Culture)": issueArticles.filter(a => a.collection === 'journeys').sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)),
 };
 ---
 
 <BaseLayout title={`Issue ${issue.data.issueNumber} - ${issue.data.theme} | Nahor`}>
-  <div class="relative min-h-screen w-full bg-gray-900 text-white font-serif overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 py-12 md:py-20 bg-[#faf9f6]">
     
-    {/* Full Screen Background Image with dark overlay for text readability */}
-    {issue.data.image && (
-      <div class="absolute inset-0 z-0">
-        <img 
-          src={issue.data.image} 
-          alt={`Cover for ${issue.data.theme}`} 
-          class="w-full h-full object-cover"
-        />
-        <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/20"></div>
-      </div>
-    )}
-
-    {/* Magazine Overlay Content */}
-    <div class="relative z-10 w-full h-full min-h-screen flex flex-col p-8 md:p-12 max-w-7xl mx-auto">
+    <div class="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
       
-      {/* Top Header */}
-      <header class="flex flex-col md:flex-row justify-between items-center md:items-start border-b border-white/30 pb-8 mb-12">
-        <div class="flex-1 text-center md:text-left">
-          <h1 class="text-7xl md:text-9xl font-bold tracking-tight">NAHOR</h1>
-          <p class="text-xl italic mt-4 text-gray-200">— A Journal of Art, Literature, Science & Journeys —</p>
-        </div>
-        <div class="text-center md:text-right mt-6 md:mt-0">
-          <p class="text-2xl font-bold uppercase tracking-widest text-[#d4af37]">Issue {issue.data.issueNumber}</p>
-          <p class="text-lg uppercase tracking-widest mt-1">{issue.data.year}</p>
-        </div>
-      </header>
+      {/* Left Column: The Designed Cover Image (Sticky) */}
+      <div class="w-full lg:w-1/2 sticky top-12">
+        {issue.data.image && (
+          <img 
+            src={issue.data.image} 
+            alt={`Cover for Issue ${issue.data.issueNumber}`} 
+            class="w-full h-auto object-cover shadow-2xl rounded-sm border border-gray-200"
+          />
+        )}
+      </div>
 
-      {/* Main Content Area */}
-      <div class="flex flex-col md:flex-row flex-1 gap-12">
+      {/* Right Column: Information & Articles */}
+      <div class="w-full lg:w-1/2 flex flex-col">
         
-        {/* Left Sidebar: Curated Article List */}
-        <aside class="w-full md:w-1/3 space-y-10">
-          {Object.entries(groupedArticles).map(([pillar, articles]) => (
-            articles.length > 0 && (
-              <div class="border-t border-white/20 pt-4">
-                <h3 class="text-lg font-bold uppercase tracking-[0.2em] text-[#d4af37] mb-4">{pillar}</h3>
-                <ul class="space-y-5">
-                  {articles.map(article => (
-                    <li>
-                      <a href={`/${article.collection}/${article.id}`} class="block group">
-                        <h4 class="text-2xl font-medium group-hover:text-[#d4af37] transition-colors leading-snug">
-                          {article.data.title}
-                        </h4>
-                        <p class="text-sm text-gray-300 mt-2 font-sans tracking-wide">
-                          by {article.data.author}
-                        </p>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )
-          ))}
+        {/* Header / Editor's Note */}
+        <header class="mb-16 border-b border-gray-300 pb-12">
+          <h1 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">
+            Issue {issue.data.issueNumber} — {issue.data.theme}
+          </h1>
+          <p class="text-lg text-gray-500 uppercase tracking-widest mb-10">Published {issue.data.year}</p>
+          
+          <div class="prose prose-lg md:prose-xl font-serif text-gray-800 leading-relaxed">
+            <h3 class="text-sm font-bold uppercase tracking-[0.2em] text-gray-400 mb-6">Editor's Note</h3>
+            <Content />
+          </div>
+        </header>
 
-          {issueArticles.length === 0 && (
-            <p class="text-sm italic text-red-300 bg-red-900/50 p-4 rounded border border-red-500/50">
-              Articles missing. Ensure the "Issue Tag" in your articles is typed exactly as <strong>{issue.id}</strong>.
+        {/* Table of Contents */}
+        <section>
+          <h3 class="text-2xl font-serif font-bold mb-10 uppercase tracking-widest text-gray-900">Inside This Issue</h3>
+          
+          {issueArticles.length === 0 ? (
+            <p class="text-gray-600 italic bg-gray-100 p-6 rounded border border-gray-200">
+              Content for this issue is currently being curated. Ensure the "Issue Tag" in your articles is typed exactly as <strong class="text-red-700">{issue.id}</strong>.
             </p>
+          ) : (
+            <div class="space-y-12">
+              {Object.entries(groupedArticles).map(([pillar, articles]) => (
+                articles.length > 0 && (
+                  <div>
+                    <h4 class="text-xs font-bold uppercase tracking-[0.2em] text-green-800 mb-6 border-b border-gray-200 pb-2">
+                      {pillar}
+                    </h4>
+                    <ul class="space-y-6">
+                      {articles.map(article => (
+                        <li>
+                          <a href={`/${article.collection}/${article.id}`} class="block group">
+                            <h5 class="text-2xl font-serif font-medium group-hover:text-green-700 transition-colors">
+                              {article.data.title}
+                            </h5>
+                            <p class="text-gray-500 mt-1 font-sans text-sm tracking-wide uppercase">
+                              by {article.data.author}
+                            </p>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )
+              ))}
+            </div>
           )}
-        </aside>
+        </section>
 
-        {/* Center: Theme Title */}
-        <main class="w-full md:w-2/3 flex flex-col items-center justify-center text-center pb-24">
-          <p class="uppercase tracking-[0.4em] text-lg text-gray-300 mb-4">Theme</p>
-          <h2 class="text-6xl md:text-[8rem] font-bold leading-none shadow-black drop-shadow-2xl">
-            {issue.data.theme}
-          </h2>
-        </main>
       </div>
-
-      {/* Editor's Note (Bottom Left) */}
-      <footer class="mt-auto max-w-xl border-l-2 border-[#d4af37] pl-6 pb-8">
-        <h3 class="text-xs font-bold uppercase tracking-[0.2em] text-[#d4af37] mb-3">Editor's Note</h3>
-        <div class="prose prose-invert prose-p:leading-relaxed text-gray-200">
-          <Content />
-        </div>
-      </footer>
-      
     </div>
   </div>
 </BaseLayout>
