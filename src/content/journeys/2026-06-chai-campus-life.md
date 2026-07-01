@@ -9,5 +9,7 @@ tags:
   - chai
   - bhu
 image: /assets/uploads/photo1.jpg
+issue: "01"
+order: 58
 ---
-chai time at BHU
+Anything for chai :)
