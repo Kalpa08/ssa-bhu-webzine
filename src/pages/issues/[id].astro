@@ -44,12 +44,15 @@ const sortedArticles = issueArticles.sort((a, b) => {
       </h1>
       <p class="text-xl text-gray-500 uppercase tracking-widest mb-10">Published {issue.data.year}</p>
       
+      {/* Aesthetic Image Container */}
       {issue.data.image && (
-        <img 
-          src={issue.data.image} 
-          alt={`Cover for Issue ${issue.data.issueNumber}`} 
-          class="w-full max-w-3xl mx-auto h-auto object-cover rounded shadow-xl"
-        />
+        <div class="max-w-3xl mx-auto p-4 bg-white shadow-sm border border-gray-100 rounded-sm">
+          <img 
+            src={issue.data.image} 
+            alt={`Cover for Issue ${issue.data.issueNumber}`} 
+            class="w-full h-auto object-cover rounded-sm hover:opacity-95 transition-opacity duration-500"
+          />
+        </div>
       )}
     </header>
 
