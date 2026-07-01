@@ -83,6 +83,7 @@ collections:
     fields:
       - {label: "Issue Number", name: "issueNumber", widget: "string", hint: "e.g., 01"}
       - {label: "Theme", name: "theme", widget: "string", hint: "e.g., Beginnings"}
+      - {label: "Publication Year", name: "year", widget: "string", hint: "e.g., 2026"}
       - {label: "Publish Date", name: "publishDate", widget: "datetime"}
       - {label: "Cover Image", name: "image", widget: "image"}
       - {label: "Editor's Note", name: "body", widget: "markdown"}
