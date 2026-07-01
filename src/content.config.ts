@@ -46,12 +46,15 @@ const canvas = defineCollection({
 });
 
 // Specialized schema strictly for Issues (No tags/categories required)
+// Specialized schema strictly for Issues
 const issues = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/issues" }),
   schema: z.object({
-    title: z.string(),
+    issueNumber: z.string(), // Matches CMS
+    theme: z.string(),       // Matches CMS
+    year: z.string(),        // Matches CMS
     publishDate: z.coerce.date(),
-    image: z.string(),
+    image: z.string().optional(),
   }),
 });
 
