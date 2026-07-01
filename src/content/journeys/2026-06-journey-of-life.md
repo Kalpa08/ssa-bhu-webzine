@@ -7,7 +7,7 @@ location: varanasi
 tags:
   - Varanasi
 image: /assets/uploads/photo1.jpg
-issue: "01"
+issue: issue-01
 order: 50
 ---
 Testing this page. I don't remember any journey right now.
