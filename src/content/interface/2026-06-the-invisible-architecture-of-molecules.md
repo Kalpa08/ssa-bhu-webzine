@@ -6,6 +6,8 @@ category: Science
 tags:
   - Science
 image: /assets/uploads/chem_image.png
+issue: issue-01
+order: 14
 ---
 
 
