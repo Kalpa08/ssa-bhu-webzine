@@ -1,27 +1,109 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
+// 1. Tell Astro to build a page for every issue in the CMS
 export async function getStaticPaths() {
-  const posts = await getCollection('issues');
-  return posts.map(post => ({ params: { id: post.id }, props: { post } }));
+  const issues = await getCollection('issues');
+  return issues.map(issue => ({
+    params: { id: issue.id },
+    props: { issue },
+  }));
 }
-const { post } = Astro.props;
-const { Content } = await render(post);
+
+const { issue } = Astro.props;
+const { Content } = await render(issue);
+
+// 2. Fetch all published content from the four pillars
+const echoes = await getCollection('echoes');
+const interfaceCol = await getCollection('interface');
+const canvas = await getCollection('canvas');
+const journeys = await getCollection('journeys');
+
+// 3. Combine them into one master array
+const allArticles = [...echoes, ...interfaceCol, ...canvas, ...journeys];
+
+// 4. Filter to ONLY include articles tagged with THIS issue's ID
+const issueArticles = allArticles.filter(article => article.data.issue === issue.id);
+
+// 5. The Magic: Sort the filtered articles by your "Reading Order" field
+const sortedArticles = issueArticles.sort((a, b) => {
+  const orderA = a.data.order ?? 99;
+  const orderB = b.data.order ?? 99;
+  return orderA - orderB;
+});
 ---
-<BaseLayout title={`${post.data.title} | Nahor`}>
-  <div style="max-width: 800px; margin: 60px auto; padding: 0 20px; display: flex; flex-direction: column; align-items: center;">
+
+<BaseLayout title={`Issue ${issue.data.issueNumber} - ${issue.data.theme} | Nahor`}>
+  <article class="max-w-5xl mx-auto px-4 py-12">
     
-    <img src={post.data.image} alt={post.data.title} style="width: 100%; max-width: 450px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); margin-bottom: 40px;" />
-    
-    <h1 style="font-size: 42px; margin: 0 0 15px 0; line-height: 1.2; text-align: center;">{post.data.title}</h1>
-    
-    <div style="font-family: 'Inter', sans-serif; font-size: 14px; color: #666; border-bottom: 1px solid #ddd; padding-bottom: 25px; margin-bottom: 40px; width: 100%; text-align: center; text-transform: uppercase; letter-spacing: 1.5px;">
-      Published: {new Date(post.data.publishDate).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
-    </div>
-    
-    <div style="font-size: 18px; line-height: 1.8; color: #333; width: 100%; max-width: 650px;">
+    {/* Issue Header */}
+    <header class="text-center mb-16 border-b pb-12">
+      <h1 class="text-5xl md:text-6xl font-serif font-bold mb-4 tracking-tight">
+        Issue {issue.data.issueNumber} — {issue.data.theme}
+      </h1>
+      <p class="text-xl text-gray-500 uppercase tracking-widest mb-10">Published {issue.data.year}</p>
+      
+      {issue.data.image && (
+        <img 
+          src={issue.data.image} 
+          alt={`Cover for Issue ${issue.data.issueNumber}`} 
+          class="w-full max-w-3xl mx-auto h-auto object-cover rounded shadow-xl"
+        />
+      )}
+    </header>
+
+    {/* Editor's Note */}
+    <section class="prose prose-lg md:prose-xl font-serif mx-auto mb-24 text-gray-800 leading-relaxed">
+      <h2 class="text-3xl text-center italic mb-8">Editor's Note</h2>
       <Content />
-    </div>
-  </div>
+    </section>
+
+    {/* Table of Contents / Curated Reading List */}
+    <section class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-serif font-bold mb-12 text-center uppercase tracking-widest border-b pb-4">In This Issue</h2>
+      
+      {sortedArticles.length === 0 ? (
+        <p class="text-center text-gray-500 italic text-lg">Content for this issue is currently being curated.</p>
+      ) : (
+        <div class="flex flex-col gap-8">
+          {sortedArticles.map(article => {
+            // Dynamically generate the URL based on which pillar it belongs to
+            const path = `/${article.collection}/${article.id}`;
+            
+            return (
+              <a href={path} class="group block bg-white border border-gray-100 rounded-lg p-6 hover:shadow-xl hover:border-gray-200 transition-all duration-300">
+                <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+                  
+                  {/* Article Thumbnail */}
+                  {article.data.image && (
+                    <img 
+                      src={article.data.image} 
+                      alt={article.data.title} 
+                      class="w-full md:w-56 h-40 object-cover rounded shadow-sm group-hover:opacity-95 transition-opacity"
+                    />
+                  )}
+                  
+                  {/* Article Info */}
+                  <div class="flex-1 flex flex-col justify-center h-full py-2">
+                    <span class="uppercase text-xs font-bold tracking-widest text-green-700 mb-2 block">
+                      {article.collection}
+                    </span>
+                    <h3 class="text-3xl font-serif font-bold group-hover:text-green-800 transition-colors mb-3">
+                      {article.data.title}
+                    </h3>
+                    <p class="text-gray-600 font-medium">
+                      By {article.data.author}
+                    </p>
+                  </div>
+
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      )}
+    </section>
+
+  </article>
 </BaseLayout>
