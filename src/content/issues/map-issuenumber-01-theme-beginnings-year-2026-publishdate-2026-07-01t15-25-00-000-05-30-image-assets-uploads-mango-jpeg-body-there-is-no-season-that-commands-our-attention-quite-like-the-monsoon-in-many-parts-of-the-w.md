@@ -17,4 +17,4 @@ The monsoon is a reminder that constant growth requires both the scorching sun a
 
 We hope you find clarity in the clouds.
 
-Kalpajyoti Dihingia *Editor, Nahor*
+Testing *Editor, Nahor*
