@@ -8,6 +8,10 @@ const baseSchema = z.object({
   publishDate: z.coerce.date(),
   image: z.string().optional(),
   tags: z.array(z.string()).default([]).optional(),
+
+  // Add these two new lines:
+  issue: z.string().optional(), // Links the article to an issue
+  order: z.number().default(99).optional(), // Controls the reading sequence
 });
 
 const echoes = defineCollection({
